@@ -1,0 +1,41 @@
+{
+  "name": "qiang.hu",
+  "version": "1.0.0",
+  "description": "Test API for friends management.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prestart": "apidoc -i routes/ -o apidoc/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huqiang/friends-api.git"
+  },
+  "author": "HU Qiang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huqiang/friends-api/issues"
+  },
+  "homepage": "https://github.com/huqiang/friends-api#readme",
+  "devDependencies": {
+    "apidoc": "^0.17.5",
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.3.0",
+    "morgan": "^1.8.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2"
+  },
+  "apidoc": {
+    "name": "Friends Management API",
+    "version": "0.1.0",
+    "description": "API Documentation for friends management",
+    "apidoc": {
+      "title": "Friends Management System",
+      "url" : "http://localhost:8080/api",
+      "sampleUrl": "http://localhost:8080/api"
+    }
+  }
+}
