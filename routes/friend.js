@@ -227,13 +227,16 @@ function subscribeUpdates(req, res){
       target = Friend.findByEmail(targetEmail);
 
   if ( requestor === null ){
-    res.status(400);
-    res.send(_getErrorResponse(requestorEmail+ " not found"));
+    // res.status(400);
+    // res.send(_getErrorResponse(requestorEmail+ " not found"));
+    // change to create a Friend
+    requestor = Friend.create(requestorEmail);
   }
 
   if ( target === null ){
-    res.status(400);
-    res.send(_getErrorResponse(targetEmail+ " not found"));
+    // res.status(400);
+    // res.send(_getErrorResponse(targetEmail+ " not found"));
+    target = Friend.create(targetEmail);
   }
 
   requestor.subscribes.add(targetEmail);
@@ -281,13 +284,11 @@ function blockUpdates(req, res){
       target = Friend.findByEmail(targetEmail);
 
   if ( requestor === null ){
-    res.status(400);
-    res.send(_getErrorResponse(requestorEmail+ " not found"));
+    requestor = Friend.create(requestorEmail);
   }
 
   if ( target === null ){
-    res.status(400);
-    res.send(_getErrorResponse(targetEmail+ " not found"));
+    target = Friend.create(targetEmail);
   }
 
   requestor.blocks.add(targetEmail);
@@ -318,7 +319,8 @@ function blockUpdates(req, res){
  *      "recipients":
  *        [
  *          "lisa@example.com",
- *          "kate@example.com"
+ *          "kate@example.com",
+ *          "common@example.com"
  *        ]
  *    }
  *
@@ -339,13 +341,25 @@ function getRecipients(req, res){
   let sender = Friend.findByEmail(senderEmail),
       recipients = new Set(sender.friends);
 
+  /** Parsing text to extract email address, simply take
+   *  string that contains @
+   */
+  for (let token of text.split(" ")){
+    if (token.includes("@")){
+      recipients.add(token);
+    }
+  }
   for (let f of Friend.friends ){
+    console.log(f);
+    console.log(text.includes(f.email));
     if ( text.includes(f.email) || f.subscribes.has(senderEmail)){
       recipients.add(f.email);
     }
+    console.log(recipients);
     if ( f.blocks.has(senderEmail) ){
       recipients.delete(f.email);
     }
+    console.log(recipients);
   }
 
   let success = _getSuccessResponse();

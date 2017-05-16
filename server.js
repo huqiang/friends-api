@@ -17,7 +17,7 @@ app.use(bodyParser.json({ type: 'application/json'}));
 app.get('/', (req, res) => res.json({message: 'Welcome to our Friends Management System!'}));
 
 //API info
-app.get('/api', (req, res) => res.json({'api-version': '1.0'}));
+app.get('/api', (req, res) => res.json({'api-version': '1.0.0'}));
 
 //All api requests use POST request.
 app.post('/api/createFriendship', friend.createFriendship);
